@@ -24,7 +24,7 @@ const Contact = ({ details }) => {
     return (
         <ContactDetailsContext.Provider value={details}>
             <ListItem sx={{ bgcolor: isChecked(details._id) ? 'divider' : 'background.paper' }}>
-                {selected.length > 0 && <Checkbox selected={isChecked(details._id)} />}
+                {selected.length > 0 && <Checkbox checked={isChecked(details._id)} />}
                 <ListItemAvatar>
                     <Avatar
                         src={picture.thumbnail}
