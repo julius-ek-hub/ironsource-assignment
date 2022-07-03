@@ -1,4 +1,4 @@
-## ironSource Assignment (Backend)
+## ironSource Assignment (Frontend)
 
 This is an assignment project, to whom it concerns only.
 
