@@ -64,7 +64,7 @@ function ContactListings() {
                         <AddMore />
                         {fetching && <LoadingContacts />}
                         {!fetching && <LoadMore onClick={fetchContacts} />}
-                        {error && <Typography color="error" mb={2} textAlign="center">{error}</Typography>}
+                        {error && <Typography color="error" pl={4} pr={4} pb={1} textAlign="center">{error}</Typography>}
                     </Styled.ScrollableBox>
                 </AllContactsContext.Provider>
             </Styled.MainBox>
