@@ -19,11 +19,11 @@ export const Name = styled(Text)(() => ({
     overflow: 'hidden'
 }));
 
-export const Cell = styled(Name)(() => ({
+export const TelProps = {
     fontSize: 15,
     fontWeight: 'unset',
-    whiteSpace: 'nowrap'
-}));
+    whiteSpace: 'nowrap',
+};
 
 export const ActionButtonsContainer = styled(Box)(() => ({
     display: "flex",

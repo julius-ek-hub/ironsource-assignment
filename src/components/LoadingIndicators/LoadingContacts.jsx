@@ -9,7 +9,7 @@ const generateArrays = length => {
     return [...new Array(length)].map((...args) => args[1]);
 }
 
-function PostSkeleton({ total = 10 }) {
+function LoadingContacts({ total = 10 }) {
     const { height, md } = useDimensionContext();
     return (
         <Styled.MainContainer height={height}>
@@ -31,4 +31,4 @@ function PostSkeleton({ total = 10 }) {
     );
 }
 
-export default PostSkeleton;
+export default LoadingContacts;

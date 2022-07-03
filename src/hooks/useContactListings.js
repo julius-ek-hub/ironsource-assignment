@@ -1,66 +1,113 @@
 import { useState, useEffect } from "react";
 
-import * as services from "../api/services";
-import * as localStore from "../api/localStore";
+import services from "../api/services";
+import localStore from "../api/localStore";
+
+import { sortContactsBy, noInternetError, uniqueContacts } from "../utils";
 
 function useContactListings() {
-	const [contacts, setContacts] = useState([]);
+	const [contacts, setContacts] = useState({ real: [], random: [] });
 	const [fetchingContacts, setFetchingContact] = useState(false);
 	const [loading, setLoading] = useState(true);
-	const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
-	const [errorFetchingContact, setErrorFetchingContact] = useState([]);
+	const [errorFetchingContact, setErrorFetchingContact] = useState(null);
+
+	const modes = { random: "random", real: "real" };
+	const [isSortedBy, sortBy] = useState("name.first");
+	const [mode, setMode] = useState(modes.random);
+	const [page, setPage] = useState({ real: 0, random: 0 });
+	const [checked, setChecked] = useState([]);
+
+	const doSetContacts = (newContacts) => {
+		setContacts({
+			...contacts,
+			[mode]: sortContactsBy(isSortedBy, newContacts),
+		});
+	};
+
+	const setApiMode = (newMode) => {
+		localStore.setApiMode(newMode);
+		setMode(newMode);
+	};
+
+	const incrementPage = () => {
+		const newValue = Math.floor(contacts[mode].length / 10);
+		setPage({
+			...page,
+			[mode]: newValue,
+		});
+
+		localStore.setPage(mode, newValue);
+	};
 
 	const fetchContacts = async () => {
 		if (fetchingContacts || loading) return;
-
 		try {
 			setErrorFetchingContact(null);
 			setFetchingContact(true);
-			const newContacts = await services.getContacts();
-			const jointContacts = [...contacts, ...newContacts.results];
-			setContacts(jointContacts);
-			localStore.save(jointContacts);
+			const newContacts = await services.getContacts(page[mode]);
+			if (newContacts.length > 0) {
+				const jointContacts = uniqueContacts(contacts[mode], newContacts);
+				console.log(jointContacts);
+				doSetContacts(jointContacts);
+				localStore.saveContact(jointContacts);
+				incrementPage();
+			}
 		} catch (e) {
-			const offline = !window.navigator.onLine;
-			const offlineError =
-				"Please check your internet connection and try again.";
-			setErrorFetchingContact(
-				`Error fetching posts ${offline ? offlineError : ""}`,
-			);
+			setErrorFetchingContact(`Error fetching contacts. ${noInternetError()}`);
 		} finally {
 			setFetchingContact(false);
 		}
 	};
 
-	const deleteContact = async (contactId) => {
-		try {
-			setContactBeingDeleted(contactId);
-			await services.deleteContact(contactId);
-			setContacts(contacts.filter(({ id }) => id.value !== contactId));
-			localStore.deleteContact(contactId);
-		} catch (err) {
-			console.log(err);
-		} finally {
-			setContactBeingDeleted(null);
-		}
+	const deleteContacts = async (__id) => {
+		const toBeDeletd = Array.isArray(__id) ? __id : [__id];
+
+		await Promise.all(toBeDeletd.map((_id) => services.deleteContact(_id)));
+
+		doSetContacts(
+			contacts[mode].filter(({ _id }) => !toBeDeletd.includes(_id)),
+		);
+
+		toBeDeletd.forEach((_id) => localStore.deleteContact(_id));
+		setChecked(checked.filter((_id) => !toBeDeletd.includes(_id)));
+	};
+
+	const saveContact = async (details) => {
+		if (mode === modes.random) return;
+		const result = await services.saveContact(details);
+		localStore.saveContact(result);
+		doSetContacts([...contacts.real, result]);
 	};
 
 	useEffect(() => {
 		setLoading(false);
-		const stored = localStore.getAll();
-		if (stored.length > 0) return setContacts(stored);
+		setMode(localStore.getApiMode);
+		setChecked([]);
+		setPage({
+			real: localStore.getPage(modes.real),
+			random: localStore.getPage(modes.random),
+		});
+		const stored = localStore.getContacts();
+		if (stored.length > 0) return doSetContacts(stored);
 		fetchContacts();
 
 		// eslint-disable-next-line
-	}, [loading]);
+	}, [loading, mode, isSortedBy]);
 
 	return {
 		contacts,
 		fetchingContacts,
 		errorFetchingContact,
-		contactBeingDeleted,
+		mode,
+		modes,
+		checked,
+		isSortedBy,
+		setChecked,
+		setApiMode,
+		saveContact,
 		fetchContacts,
-		deleteContact,
+		deleteContact: deleteContacts,
+		sortBy,
 	};
 }
 

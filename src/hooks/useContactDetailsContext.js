@@ -3,10 +3,23 @@ import ContactDetailsContext from "../contexts/ContactDetailsContext";
 
 /**
  * @returns {{
- * name: String,
+ * name: {
+ * 	title: "Mr." | "Miss." | "Mrs.",
+ * 	first: String,
+ * 	last: String,
+ * },
+ * gender: "Male" | "Female",
+ * dob: { date: Date, age: Number },
  * email: String,
- * telephone: String,
- * id: String
+ * phone: String,
+ * picture: { thumbnail: String, medium: String, large: String },
+ * location: {
+ * 	street: { number: Number, name: String },
+ * 	city: String,
+ * 	state: String,
+ * 	country: String,
+ *	},
+ * _id: String
  * }}
  */
 

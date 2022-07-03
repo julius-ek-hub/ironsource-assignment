@@ -1,7 +1,5 @@
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Text from '@mui/material/Typography';
-
 
 export const LoadMore = styled(Box)(() => ({
     display: 'flex',
@@ -27,21 +25,29 @@ export const Addmore = styled(Box)(({ theme }) => ({
     }
 }));
 
-
-export const Name = styled(Text)(() => ({
-    fontWeight: 600,
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden'
+export const MainBox = styled(Box)(() => ({
+    height: "100%",
+    position: "relative",
+    overflow: "hidden"
 }));
 
-export const Cell = styled(Name)(() => ({
-    fontSize: 15,
-    fontWeight: 'unset',
-    whiteSpace: 'nowrap'
+export const ScrollableBox = styled(Box)(() => ({
+    height: "calc(100% - 70px)",
+    overflow: "auto"
 }));
 
-export const ActionButtonsContainer = styled(Box)(() => ({
+export const FixedHeader = styled(Box)(() => ({
+    minHeight: "65px",
     display: "flex",
-    gap: "20px",
-}))
+    justifyContent: "center",
+    flexDirection: "column",
+    '&>.MuiBox-root': {
+        display: "flex",
+        alignItems: "center",
+        padding: "8px",
+        paddingLeft: '16px',
+        '&>h5': {
+            fontWeight: 'bold'
+        }
+    }
+}));

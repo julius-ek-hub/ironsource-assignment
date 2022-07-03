@@ -16,7 +16,7 @@ function TheAssignment() {
 		<ThemeProvider theme={theme}>
 			<DimensionContext.Provider value={dimensions}>
 				<ContactListings />
-				{dimensions.height === undefined && <FullScreenLoading />}
+				<FullScreenLoading loading={dimensions.height === undefined} />
 			</DimensionContext.Provider>
 		</ThemeProvider>
 	);

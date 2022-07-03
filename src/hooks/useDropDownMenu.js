@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function useContactSideMenu() {
+function useDropDownMenu() {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event) => {
@@ -13,4 +13,4 @@ function useContactSideMenu() {
 	return { open, anchorEl, handleClick, handleClose };
 }
 
-export default useContactSideMenu;
+export default useDropDownMenu;

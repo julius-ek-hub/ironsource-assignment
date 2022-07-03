@@ -3,11 +3,23 @@ import AllContactsContext from "../contexts/AllContactsContext";
 
 /**
  * @returns {{
- * contacts: Array.<{
- * name: String,
- * email: String,
- * telephone: String
- * }>
+ * contacts: Array,
+ * fetchingContacts: Boolean,
+ * errorFetchingContact: null | String,
+ * contactBeingDeleted: String,
+ * isSortedBy: String,
+ * mode: 'real' | 'random',
+ * modes: {
+ *   real: String,
+ *   random: String
+ * },
+ * checked: Array.<String>
+ * setApiMode: Function,
+ * fetchContacts: Function,
+ * deleteContact: Function,
+ * saveContact: Function,
+ * sortBy: Function
+ * setChecked: Function,
  * }}
  */
 

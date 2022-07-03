@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 
@@ -8,47 +9,53 @@ import View from '../View';
 import LoadMore from './LoadMore';
 import AddMore from './AddMore';
 import FilterButton from './FilterButton';
-import FlexCenter from '../StyledComponents/FlexCenter'
+import FlexCenter from '../StyledComponents/FlexCenter';
+import CheckedIndicator from './CheckedIndicator';
+import * as Styled from '../StyledComponents/ContactListings';
 
 import AllContactsContext from '../../contexts/AllContactsContext';
 
 import useContactListings from '../../hooks/useContactListings';
-import { Divider } from '@mui/material';
 
-function AllPosts() {
+function ContactListings() {
 
     const contactsHook = useContactListings();
 
-    let { errorFetchingContact: error, fetchingContacts: fetching, contacts, fetchContacts } = contactsHook;
+    let { errorFetchingContact: error, fetchingContacts: fetching, contacts, mode, fetchContacts } = contactsHook;
+
+    const targetContacts = contacts[mode];
 
     const handleScroll = (e) => {
         const target = e.target;
         const scollHeight = target.scrollHeight;
         const height = target.clientHeight;
         const _scrollTop = target.scrollTop;
-        if (Math.abs(scollHeight - (height + _scrollTop)) < 10) {
+        if (Math.abs(scollHeight - (height + _scrollTop)) < 2) {
             fetchContacts();
         }
     }
 
     return (
         <View onScrolledToBottom={fetchContacts}>
-            <Box height={"100%"} position="relative" overflow="hidden">
+            <Styled.MainBox height={"100%"} position="relative" overflow="hidden">
                 <AllContactsContext.Provider value={contactsHook}>
-                    <Box display="flex" alignItems="center" height="70px">
-                        <Typography variant='h5' fontWeight="bold" p={2}>Contact List</Typography>
-                        <FilterButton />
-                    </Box>
+                    <Styled.FixedHeader>
+                        <Box>
+                            <Typography variant='h5'>Contact List</Typography>
+                            <FilterButton />
+                        </Box>
+                        <CheckedIndicator />
+                    </Styled.FixedHeader>
                     <Divider />
-                    <Box height="calc(100% - 70px)" overflow="auto" onScroll={handleScroll}>
+                    <Styled.ScrollableBox height="calc(100% - 70px)" overflow="auto" onScroll={handleScroll}>
 
-                        {contacts.length > 0 && (
+                        {targetContacts.length > 0 && (
                             <List>
-                                {contacts.map((contact, k) => <Contact key={k} details={{ ...contact, index: k }} />)}
+                                {targetContacts.map((contact, k) => <Contact key={k} details={{ ...contact, index: k }} />)}
                             </List>
                         )}
 
-                        {(contacts.length === 0 && !fetching) ? (
+                        {(targetContacts.length === 0 && !fetching) ? (
                             <FlexCenter height="100%">
                                 No Contact
                             </FlexCenter>
@@ -57,12 +64,12 @@ function AllPosts() {
                         <AddMore />
                         {fetching && <LoadingContacts />}
                         {!fetching && <LoadMore onClick={fetchContacts} />}
-                        {error && <Typography>{error}</Typography>}
-                    </Box>
+                        {error && <Typography color="error" mb={2} textAlign="center">{error}</Typography>}
+                    </Styled.ScrollableBox>
                 </AllContactsContext.Provider>
-            </Box>
+            </Styled.MainBox>
         </View>
     );
 }
 
-export default AllPosts;
+export default ContactListings;
