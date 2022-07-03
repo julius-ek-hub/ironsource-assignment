@@ -65,20 +65,24 @@ const FilterButton = () => {
                     </RadioGroup>
                 </FormControl>
                 <Divider />
-                <RadioGroup sx={{ ml: 2, mt: 1, mr: 1 }}>
-                    <FormControlLabel
-                        onChange={handleDarkModeChane}
-                        control={<MuiSwitch checked={darkMode} />}
-                        label="Dark Mode" />
-                    <FormControlLabel
-                        onChange={handleLoadMoreOnscroll}
-                        control={<MuiSwitch checked={loadMoreOnscroll} />}
-                        label="Load more onScroll" />
-                    <FormControlLabel
-                        onChange={handleModeChange}
-                        control={<MuiSwitch checked={apiMode === modes.real} />}
-                        label="Use Real API" />
-                </RadioGroup>
+                <FormControl sx={{ p: 1 }}>
+                    <FormLabel sx={{ ml: 1 }}>Settings</FormLabel>
+                    <RadioGroup sx={{ ml: 2, mt: 1, mr: 1 }}>
+                        <FormControlLabel
+                            onChange={handleDarkModeChane}
+                            control={<MuiSwitch checked={darkMode} />}
+                            label="Dark Mode" />
+                        <FormControlLabel
+                            onChange={handleLoadMoreOnscroll}
+                            control={<MuiSwitch checked={loadMoreOnscroll} />}
+                            label="Load more onScroll" />
+                        <FormControlLabel
+                            onChange={handleModeChange}
+                            control={<MuiSwitch checked={apiMode === modes.real} />}
+                            label="Use Real API" />
+                    </RadioGroup>
+                </FormControl>
+
             </DropDownMenu>
         </Box >
     );
