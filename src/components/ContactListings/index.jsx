@@ -26,6 +26,7 @@ function ContactListings() {
         errorFetchingContact: error,
         fetchingContacts: fetching,
         contacts,
+        selected,
         apiMode,
         fetchContacts,
         loadMoreOnscroll
@@ -38,9 +39,11 @@ function ContactListings() {
         const scollHeight = target.scrollHeight;
         const height = target.clientHeight;
         const _scrollTop = target.scrollTop;
-        if (Math.abs(scollHeight - (height + _scrollTop)) < 2 && loadMoreOnscroll) {
+        if (Math.abs(scollHeight - (height + _scrollTop)) < 2 &&
+            loadMoreOnscroll &&
+            selected.length === 0)
             fetchContacts();
-        }
+
     }
 
     return (
