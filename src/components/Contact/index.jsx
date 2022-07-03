@@ -15,16 +15,16 @@ import useContactListingsContext from '../../hooks/useContactsListingsContext';
 
 const Contact = ({ details }) => {
 
-    const { checked } = useContactListingsContext();
+    const { selected } = useContactListingsContext();
 
     const { picture, gender, name } = details;
 
-    const isChecked = _id => checked.includes(details._id)
+    const isChecked = _id => selected.includes(details._id)
 
     return (
         <ContactDetailsContext.Provider value={details}>
             <ListItem sx={{ bgcolor: isChecked(details._id) ? 'divider' : 'background.paper' }}>
-                {checked.length > 0 && <Checkbox checked={isChecked(details._id)} />}
+                {selected.length > 0 && <Checkbox selected={isChecked(details._id)} />}
                 <ListItemAvatar>
                     <Avatar
                         src={picture.thumbnail}

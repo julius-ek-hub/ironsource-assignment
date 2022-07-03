@@ -13,13 +13,13 @@ import AllContactsContext from "../contexts/AllContactsContext";
  *   real: String,
  *   random: String
  * },
- * checked: Array.<String>
+ * selected: Array.<String>
  * setApiMode: Function,
  * fetchContacts: Function,
  * deleteContact: Function,
  * saveContact: Function,
  * sortBy: Function
- * setChecked: Function,
+ * setSelected: Function,
  * }}
  */
 

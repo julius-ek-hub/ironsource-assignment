@@ -13,10 +13,10 @@ import useContactListingsContext from '../../hooks/useContactsListingsContext';
 export default function ActionButtons() {
 
     const { cell, email, _id } = useContactDetailsContext();
-    const { checked } = useContactListingsContext();
+    const { selected } = useContactListingsContext();
     const { sm } = useDimensionContext();
 
-    if (checked.includes(_id)) return null;
+    if (selected.includes(_id)) return null;
 
     const IconButton = ({ MuiIcon, ...rest }) => (
         <MuiIconButton {...rest}>

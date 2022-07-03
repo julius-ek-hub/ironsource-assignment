@@ -30,7 +30,7 @@ export default function SideMenu() {
     const [detailsOpen, setDetailsOpen] = useState(false);
     const [confirmBoxOpen, setConfirmBoxOpen] = useState(false);
     const { phone, _id, name } = useContactDetailsContext();
-    const { deleteContact, checked, setChecked } = useContactListingsContext();
+    const { deleteContact, selected, setSelected } = useContactListingsContext();
 
     return (
         <>
@@ -42,7 +42,7 @@ export default function SideMenu() {
                 )}>
 
                 <MenuItem Icon={CheckBoxIcon} title="Select" onClick={
-                    () => setChecked([...checked, _id])
+                    () => setSelected([...selected, _id])
                 } />
 
                 <MenuItem Icon={PersonIcon} title="More Info" onClick={

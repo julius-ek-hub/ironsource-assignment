@@ -15,7 +15,7 @@ function useContactListings() {
 	const [isSortedBy, sortBy] = useState("name.first");
 	const [mode, setMode] = useState(modes.random);
 	const [page, setPage] = useState({ real: 0, random: 0 });
-	const [checked, setChecked] = useState([]);
+	const [selected, setSelected] = useState([]);
 
 	const doSetContacts = (newContacts) => {
 		setContacts({
@@ -47,7 +47,6 @@ function useContactListings() {
 			const newContacts = await services.getContacts(page[mode]);
 			if (newContacts.length > 0) {
 				const jointContacts = uniqueContacts(contacts[mode], newContacts);
-				console.log(jointContacts);
 				doSetContacts(jointContacts);
 				localStore.saveContact(jointContacts);
 				incrementPage();
@@ -69,7 +68,7 @@ function useContactListings() {
 		);
 
 		toBeDeletd.forEach((_id) => localStore.deleteContact(_id));
-		setChecked(checked.filter((_id) => !toBeDeletd.includes(_id)));
+		setSelected(selected.filter((_id) => !toBeDeletd.includes(_id)));
 	};
 
 	const saveContact = async (details) => {
@@ -82,7 +81,7 @@ function useContactListings() {
 	useEffect(() => {
 		setLoading(false);
 		setMode(localStore.getApiMode);
-		setChecked([]);
+		setSelected([]);
 		setPage({
 			real: localStore.getPage(modes.real),
 			random: localStore.getPage(modes.random),
@@ -100,9 +99,9 @@ function useContactListings() {
 		errorFetchingContact,
 		mode,
 		modes,
-		checked,
+		selected,
 		isSortedBy,
-		setChecked,
+		setSelected,
 		setApiMode,
 		saveContact,
 		fetchContacts,

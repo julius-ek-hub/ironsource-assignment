@@ -12,12 +12,12 @@ import useContactListingsContext from '../../hooks/useContactsListingsContext';
 export default function ContactBody() {
     const [openContactDetails, setOpenContactDetails] = useState(false);
     const { name: { title, first, last }, phone, _id } = useContactDetailsContext();
-    const { checked, setChecked } = useContactListingsContext();
+    const { selected, setSelected } = useContactListingsContext();
 
     const handleContactClick = () => {
-        if (checked.length === 0) return setOpenContactDetails(true);
-        if (checked.includes(_id)) return setChecked(checked.filter(c => c !== _id));
-        setChecked([...checked, _id]);
+        if (selected.length === 0) return setOpenContactDetails(true);
+        if (selected.includes(_id)) return setSelected(selected.filter(c => c !== _id));
+        setSelected([...selected, _id]);
     }
 
     return (

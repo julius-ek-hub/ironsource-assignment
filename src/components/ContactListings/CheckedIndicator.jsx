@@ -15,16 +15,16 @@ import useContactListingsContext from '../../hooks/useContactsListingsContext';
 function CheckedIndicator() {
 
     const [confirmBoxOpen, setConfirmBoxOpen] = useState(false);
-    const { checked, setChecked, contacts, mode, deleteContact } = useContactListingsContext();
+    const { selected, setSelected, contacts, mode, deleteContact } = useContactListingsContext();
 
-    const total = checked.length;
+    const total = selected.length;
 
     if (total === 0) return null;
 
 
-    const toggleCheckAll = (e, checked) => {
-        if (checked) return setChecked(contacts[mode].map(({ _id }) => _id));
-        setChecked([]);
+    const toggleCheckAll = (e, selected) => {
+        if (selected) return setSelected(contacts[mode].map(({ _id }) => _id));
+        setSelected([]);
     }
 
 
@@ -33,14 +33,14 @@ function CheckedIndicator() {
             <Checkbox
                 onChange={toggleCheckAll}
                 checked={total === contacts[mode].length} />
-            <Text>{checked.length} / {contacts[mode].length} Selected</Text>
+            <Text>{selected.length} / {contacts[mode].length} Selected</Text>
             <IconButton sx={{ ml: "auto" }} onClick={() => setConfirmBoxOpen(true)}>
                 <Delete />
             </IconButton>
             <ConfirmThenDelete
                 open={confirmBoxOpen}
                 onDone={() => setConfirmBoxOpen(false)}
-                deleteHandler={() => deleteContact(checked)}
+                deleteHandler={() => deleteContact(selected)}
                 name={`${total} contact${total > 1 ? 's' : ''}`}
             />
         </Box>
