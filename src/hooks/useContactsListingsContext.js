@@ -8,13 +8,15 @@ import AllContactsContext from "../contexts/AllContactsContext";
  * errorFetchingContact: null | String,
  * contactBeingDeleted: String,
  * isSortedBy: String,
- * mode: 'real' | 'random',
+ * apiMode: 'real' | 'random',
  * modes: {
  *   real: String,
  *   random: String
  * },
  * selected: Array.<String>,
  * loadMoreOnscroll: Boolean,
+ * darkMode: Boolean,
+ * setDarkMode: Function,
  * setLoadMoreOnscroll: Boolean,
  * setApiMode: Function,
  * fetchContacts: Function,

@@ -1,19 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import services from "../api/services";
 import localStore from "../api/localStore";
+
+import ThemeControlContext from "../contexts/ThemeControlContext";
 
 import { sortContactsBy, noInternetError, uniqueContacts } from "../utils";
 
 function useContactListings() {
 	const [contacts, setContacts] = useState({ real: [], random: [] });
+	const { setMode } = useContext(ThemeControlContext);
+
 	const [fetchingContacts, setFetchingContact] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [errorFetchingContact, setErrorFetchingContact] = useState(null);
 
 	const modes = { random: "random", real: "real" };
 	const [isSortedBy, sortBy] = useState("name.first");
-	const [mode, setMode] = useState(modes.random);
+	const [apiMode, _setApiMode] = useState(modes.random);
+	const [darkMode, _setDarkMode] = useState(false);
 	const [page, setPage] = useState({ real: 0, random: 0 });
 	const [selected, setSelected] = useState([]);
 	const [loadMoreOnscroll, setLoadMoreOnscroll] = useState(true);
@@ -21,23 +26,29 @@ function useContactListings() {
 	const doSetContacts = (newContacts) => {
 		setContacts({
 			...contacts,
-			[mode]: sortContactsBy(isSortedBy, newContacts),
+			[apiMode]: sortContactsBy(isSortedBy, newContacts),
 		});
 	};
 
 	const setApiMode = (newMode) => {
 		localStore.setApiMode(newMode);
-		setMode(newMode);
+		_setApiMode(newMode);
+	};
+
+	const setDarkMode = (dark) => {
+		localStore.setDarkMode(dark);
+		_setDarkMode(dark);
+		setMode(dark ? "dark" : "light");
 	};
 
 	const incrementPage = () => {
-		const newValue = Math.floor(contacts[mode].length / 10);
+		const newValue = Math.floor(contacts[apiMode].length / 10);
 		setPage({
 			...page,
-			[mode]: newValue,
+			[apiMode]: newValue,
 		});
 
-		localStore.setPage(mode, newValue);
+		localStore.setPage(apiMode, newValue);
 	};
 
 	const fetchContacts = async () => {
@@ -45,9 +56,9 @@ function useContactListings() {
 		try {
 			setErrorFetchingContact(null);
 			setFetchingContact(true);
-			const newContacts = await services.getContacts(page[mode]);
+			const newContacts = await services.getContacts(page[apiMode]);
 			if (newContacts.length > 0) {
-				const jointContacts = uniqueContacts(contacts[mode], newContacts);
+				const jointContacts = uniqueContacts(contacts[apiMode], newContacts);
 				doSetContacts(jointContacts);
 				localStore.saveContact(jointContacts);
 				incrementPage();
@@ -65,7 +76,7 @@ function useContactListings() {
 		await Promise.all(toBeDeletd.map((_id) => services.deleteContact(_id)));
 
 		doSetContacts(
-			contacts[mode].filter(({ _id }) => !toBeDeletd.includes(_id)),
+			contacts[apiMode].filter(({ _id }) => !toBeDeletd.includes(_id)),
 		);
 
 		toBeDeletd.forEach((_id) => localStore.deleteContact(_id));
@@ -73,7 +84,7 @@ function useContactListings() {
 	};
 
 	const saveContact = async (details) => {
-		if (mode === modes.random) return;
+		if (apiMode === modes.random) return;
 		const result = await services.saveContact(details);
 		localStore.saveContact(result);
 		doSetContacts([...contacts.real, result]);
@@ -81,7 +92,8 @@ function useContactListings() {
 
 	useEffect(() => {
 		setLoading(false);
-		setMode(localStore.getApiMode);
+		setApiMode(localStore.getApiMode());
+		setDarkMode(localStore.getDarkMode());
 		setSelected([]);
 		setPage({
 			real: localStore.getPage(modes.real),
@@ -92,17 +104,19 @@ function useContactListings() {
 		fetchContacts();
 
 		// eslint-disable-next-line
-	}, [loading, mode, isSortedBy]);
+	}, [loading, apiMode, isSortedBy]);
 
 	return {
 		contacts,
 		fetchingContacts,
 		errorFetchingContact,
-		mode,
+		apiMode,
 		modes,
 		selected,
 		isSortedBy,
 		loadMoreOnscroll,
+		darkMode,
+		setDarkMode,
 		setLoadMoreOnscroll,
 		setSelected,
 		setApiMode,

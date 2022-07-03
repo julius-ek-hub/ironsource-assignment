@@ -15,7 +15,7 @@ import useContactListingsContext from '../../hooks/useContactsListingsContext';
 function AllSelectedContactsDeleteButton() {
 
     const [confirmBoxOpen, setConfirmBoxOpen] = useState(false);
-    const { selected, setSelected, contacts, mode, deleteContact } = useContactListingsContext();
+    const { selected, setSelected, contacts, apiMode, deleteContact } = useContactListingsContext();
 
     const total = selected.length;
 
@@ -23,7 +23,7 @@ function AllSelectedContactsDeleteButton() {
 
 
     const toggleCheckAll = (e, selected) => {
-        if (selected) return setSelected(contacts[mode].map(({ _id }) => _id));
+        if (selected) return setSelected(contacts[apiMode].map(({ _id }) => _id));
         setSelected([]);
     }
 
@@ -32,8 +32,8 @@ function AllSelectedContactsDeleteButton() {
         <Box display="flex" ml={1} mr={3} mb={1} alignItems="center">
             <Checkbox
                 onChange={toggleCheckAll}
-                checked={total === contacts[mode].length} />
-            <Text>{selected.length} / {contacts[mode].length} Selected</Text>
+                checked={total === contacts[apiMode].length} />
+            <Text>{selected.length} / {contacts[apiMode].length} Selected</Text>
             <IconButton sx={{ ml: "auto" }} onClick={() => setConfirmBoxOpen(true)}>
                 <Delete />
             </IconButton>

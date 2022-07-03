@@ -1,12 +1,12 @@
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
-export const LoadMore = styled(Box)(() => ({
+export const LoadMore = styled(Box)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'center',
     marginBottom: '20px',
     '& button': {
-        color: '#000',
+        color: theme.palette.text.primary,
     }
 }));
 
@@ -36,7 +36,7 @@ export const ScrollableBox = styled(Box)(() => ({
     overflow: "auto"
 }));
 
-export const FixedHeader = styled(Box)(() => ({
+export const FixedHeader = styled(Box)(({ theme }) => ({
     minHeight: "65px",
     display: "flex",
     justifyContent: "center",
@@ -47,7 +47,8 @@ export const FixedHeader = styled(Box)(() => ({
         padding: "8px",
         paddingLeft: '16px',
         '&>h5': {
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            color: theme.palette.text.primary
         }
     }
 }));

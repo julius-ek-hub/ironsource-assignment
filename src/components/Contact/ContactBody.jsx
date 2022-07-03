@@ -23,7 +23,7 @@ export default function ContactBody() {
     return (
         <>
             <ListItemText
-                primary={<Name>{`${title}. ${first} ${last}`}</Name>}
+                primary={<Name color="CaptionText">{`${title}. ${first} ${last}`}</Name>}
                 secondary={phone}
                 secondaryTypographyProps={{ sx: TelProps }}
                 sx={{ cursor: 'pointer' }}

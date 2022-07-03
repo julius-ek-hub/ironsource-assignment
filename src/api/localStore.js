@@ -1,15 +1,18 @@
-const getApiMode = () => window.localStorage.getItem("api_mode") || "random";
+const setItem = (key, value) => window.localStorage.setItem(key, value);
+const getItem = (key) => window.localStorage.getItem(key);
+
+const getApiMode = () => getItem("api_mode") || "random";
 
 const setApiMode = (newApiMode) => {
 	try {
-		window.localStorage.setItem("api_mode", newApiMode);
+		setItem("api_mode", newApiMode);
 	} catch (error) {
 		console.log(error);
 	}
 };
 
 const getContacts = () => {
-	const result = window.localStorage.getItem(getApiMode());
+	const result = getItem(getApiMode());
 	if (!result) return [];
 
 	return JSON.parse(result);
@@ -23,7 +26,7 @@ const saveContact = (newValues) => {
 			if (all.some(({ _id }) => newValue._id === _id)) return;
 			all.push(newValue);
 		});
-		window.localStorage.setItem(getApiMode(), JSON.stringify(all));
+		setItem(getApiMode(), JSON.stringify(all));
 	} catch (e) {
 		console.log(e);
 	}
@@ -33,7 +36,7 @@ const saveContact = (newValues) => {
 export const deleteContact = (_id) => {
 	const all = getContacts();
 	const allNow = all.filter((contact) => contact._id !== _id);
-	return localStorage.setItem(getApiMode(), JSON.stringify(allNow));
+	return setItem(getApiMode(), JSON.stringify(allNow));
 };
 
 const localStore = {
@@ -42,8 +45,10 @@ const localStore = {
 	deleteContact,
 	setApiMode,
 	getApiMode,
-	getPage: (mode) => Number(window.localStorage.getItem(mode + "_page") || 0),
-	setPage: (mode, value) => window.localStorage.setItem(mode + "_page", value),
+	getPage: (apiMode) => Number(getItem(apiMode + "_page") || 0),
+	setPage: (apiMode, value) => setItem(apiMode + "_page", value),
+	setDarkMode: (value) => setItem("dark_mode", value),
+	getDarkMode: () => (getItem("dark_mode") === "true" ? true : false),
 };
 
 export default localStore;

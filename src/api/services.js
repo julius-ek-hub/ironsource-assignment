@@ -5,8 +5,6 @@ const RANDOM_USERS_BASE_URL = "https://randomuser.me/api/";
 const REAL_USERS_BASE_URL =
 	"https://ironsource-assignment-backend.herokuapp.com/api/contacts/";
 
-// Random API
-
 const getContactsRandom = async (page, limit = 10) => {
 	const result_10 = await Promise.all(
 		[...new Array(limit)].map(async () => {
@@ -20,8 +18,6 @@ const getContactsRandom = async (page, limit = 10) => {
 
 	return result_10.flat();
 };
-
-// Real API
 
 const getContacts = (page = 0, limit = 10) => {
 	const apiMode = localStore.getApiMode();

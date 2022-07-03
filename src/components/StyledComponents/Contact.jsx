@@ -12,11 +12,12 @@ export const Avatar = styled(MuiAvatar)(({ theme: { palette }, gender }) => ({
 }));
 
 
-export const Name = styled(Text)(() => ({
+export const Name = styled(Text)(({ theme }) => ({
     fontWeight: 600,
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    color: theme.palette.text.primary
 }));
 
 export const TelProps = {

@@ -13,21 +13,34 @@ import SortIcon from '@mui/icons-material/Sort';
 import DropDownMenu from '../DropDownMenu';
 import useContactListingsContext from '../../hooks/useContactsListingsContext';
 
+const FilterButton = () => {
 
-function FilterButton() {
-
-    const { mode, setApiMode, modes, sortBy, isSortedBy, loadMoreOnscroll, setLoadMoreOnscroll } = useContactListingsContext();
+    const {
+        apiMode,
+        setApiMode,
+        modes,
+        sortBy,
+        isSortedBy,
+        darkMode,
+        setDarkMode,
+        loadMoreOnscroll,
+        setLoadMoreOnscroll
+    } = useContactListingsContext();
 
     const handleModeChange = () => {
-        setApiMode(mode === modes.real ? modes.random : modes.real)
+        setApiMode(apiMode === modes.real ? modes.random : modes.real)
     }
 
-    const handleSortChange = (even, value) => {
+    const handleSortChange = (e, value) => {
         sortBy(value);
     };
 
     const handleLoadMoreOnscroll = () => {
         setLoadMoreOnscroll(!loadMoreOnscroll);
+    };
+
+    const handleDarkModeChane = (e, value) => {
+        setDarkMode(value);
     };
 
     return (
@@ -54,12 +67,16 @@ function FilterButton() {
                 <Divider />
                 <RadioGroup sx={{ ml: 2, mt: 1, mr: 1 }}>
                     <FormControlLabel
+                        onChange={handleDarkModeChane}
+                        control={<MuiSwitch checked={darkMode} />}
+                        label="Dark Mode" />
+                    <FormControlLabel
                         onChange={handleLoadMoreOnscroll}
                         control={<MuiSwitch checked={loadMoreOnscroll} />}
                         label="Load more onScroll" />
                     <FormControlLabel
                         onChange={handleModeChange}
-                        control={<MuiSwitch checked={mode === modes.real} />}
+                        control={<MuiSwitch checked={apiMode === modes.real} />}
                         label="Use Real API" />
                 </RadioGroup>
             </DropDownMenu>

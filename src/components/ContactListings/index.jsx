@@ -26,12 +26,12 @@ function ContactListings() {
         errorFetchingContact: error,
         fetchingContacts: fetching,
         contacts,
-        mode,
+        apiMode,
         fetchContacts,
         loadMoreOnscroll
     } = contactsHook;
 
-    const targetContacts = contacts[mode];
+    const targetContacts = contacts[apiMode];
 
     const handleScroll = (e) => {
         const target = e.target;
