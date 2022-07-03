@@ -10,7 +10,7 @@ import useContactDetailsContext from '../../hooks/useContactDetailsContext';
 
 function ActionButtons() {
 
-    const { cell, email, gender } = useContactDetailsContext();
+    const { phone, email, gender } = useContactDetailsContext();
 
     const color = gender === 'male' ? 'error' : 'success';
 
@@ -22,9 +22,9 @@ function ActionButtons() {
 
     return (
         <Stack direction="row" gap={3}>
-            <StackItem href={`tel:${cell}`} Icon={CallIcon} />
+            <StackItem href={`tel:${phone}`} Icon={CallIcon} />
             <StackItem href={`mailto:${email}`} Icon={EmailIcon} />
-            <StackItem href={`https://wa.me/${cell}`} Icon={WhatsAppIcon} />
+            <StackItem href={`https://wa.me/${phone}`} Icon={WhatsAppIcon} />
         </Stack>
     );
 }
