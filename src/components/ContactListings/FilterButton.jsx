@@ -19,6 +19,7 @@ const FilterButton = () => {
         apiMode,
         setApiMode,
         modes,
+        selected,
         sortBy,
         isSortedBy,
         darkMode,
@@ -26,6 +27,8 @@ const FilterButton = () => {
         loadMoreOnscroll,
         setLoadMoreOnscroll
     } = useContactListingsContext();
+
+    if (selected.length !== 0) return null;
 
     const handleModeChange = () => {
         setApiMode(apiMode === modes.real ? modes.random : modes.real)

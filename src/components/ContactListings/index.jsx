@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
+import Text from '@mui/material/Typography';
 import List from '@mui/material/List';
 
 import LoadingContacts from '../LoadingIndicators/LoadingContacts';
@@ -49,7 +49,7 @@ function ContactListings() {
                 <AllContactsContext.Provider value={contactsHook}>
                     <Styled.FixedHeader>
                         <Box>
-                            <Typography variant='h5'>Contact List</Typography>
+                            <Text variant='h5' ml={1}>Contact List</Text>
                             <FilterButton />
                         </Box>
                         <AllSelectedContactsDeleteButton />

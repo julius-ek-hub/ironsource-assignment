@@ -18,7 +18,7 @@ function AddMore() {
     const [open, setOpen] = useState(false);
     const [status, setStatus] = useState();
 
-    const { saveContact } = useContactListingsContext();
+    const { saveContact, selected } = useContactListingsContext();
 
     const handleSubmit = async (details) => {
         if (status) return;
@@ -37,7 +37,10 @@ function AddMore() {
 
     return (
         <>
-            <Styled.Addmore onClick={() => setOpen(true)}>
+            <Styled.Addmore
+                onClick={() => setOpen(true)}
+                sx={{ display: selected.length === 0 ? 'block' : 'none' }}
+            >
                 <IconButton>
                     <AddIcon fontSize='large' />
                 </IconButton>
