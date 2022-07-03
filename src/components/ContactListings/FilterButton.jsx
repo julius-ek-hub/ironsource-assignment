@@ -16,14 +16,18 @@ import useContactListingsContext from '../../hooks/useContactsListingsContext';
 
 function FilterButton() {
 
-    const { mode, setApiMode, modes, sortBy, isSortedBy } = useContactListingsContext();
+    const { mode, setApiMode, modes, sortBy, isSortedBy, loadMoreOnscroll, setLoadMoreOnscroll } = useContactListingsContext();
 
     const handleModeChange = () => {
         setApiMode(mode === modes.real ? modes.random : modes.real)
     }
 
-    const handleSortChange = (event) => {
-        sortBy(event.target.value);
+    const handleSortChange = (even, value) => {
+        sortBy(value);
+    };
+
+    const handleLoadMoreOnscroll = () => {
+        setLoadMoreOnscroll(!loadMoreOnscroll);
     };
 
     return (
@@ -48,11 +52,13 @@ function FilterButton() {
                     </RadioGroup>
                 </FormControl>
                 <Divider />
-                <RadioGroup
-                    sx={{ ml: 2, mt: 1, mr: 1 }}
-                    value={mode} >
+                <RadioGroup sx={{ ml: 2, mt: 1, mr: 1 }}>
                     <FormControlLabel
-                        onClick={handleModeChange}
+                        onChange={handleLoadMoreOnscroll}
+                        control={<MuiSwitch checked={loadMoreOnscroll} />}
+                        label="Load more onScroll" />
+                    <FormControlLabel
+                        onChange={handleModeChange}
                         control={<MuiSwitch checked={mode === modes.real} />}
                         label="Use Real API" />
                 </RadioGroup>

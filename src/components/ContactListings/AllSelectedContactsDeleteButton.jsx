@@ -12,7 +12,7 @@ import ConfirmThenDelete from "../ConfirmThenDelete";
 import useContactListingsContext from '../../hooks/useContactsListingsContext';
 
 
-function CheckedIndicator() {
+function AllSelectedContactsDeleteButton() {
 
     const [confirmBoxOpen, setConfirmBoxOpen] = useState(false);
     const { selected, setSelected, contacts, mode, deleteContact } = useContactListingsContext();
@@ -47,4 +47,4 @@ function CheckedIndicator() {
     );
 }
 
-export default CheckedIndicator;
+export default AllSelectedContactsDeleteButton;

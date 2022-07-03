@@ -13,7 +13,9 @@ import AllContactsContext from "../contexts/AllContactsContext";
  *   real: String,
  *   random: String
  * },
- * selected: Array.<String>
+ * selected: Array.<String>,
+ * loadMoreOnscroll: Boolean,
+ * setLoadMoreOnscroll: Boolean,
  * setApiMode: Function,
  * fetchContacts: Function,
  * deleteContact: Function,

@@ -10,8 +10,9 @@ import LoadMore from './LoadMore';
 import AddMore from './AddMore';
 import FilterButton from './FilterButton';
 import FlexCenter from '../StyledComponents/FlexCenter';
-import CheckedIndicator from './CheckedIndicator';
+import AllSelectedContactsDeleteButton from './AllSelectedContactsDeleteButton';
 import * as Styled from '../StyledComponents/ContactListings';
+import ErrorMessage from './ErrorMessage';
 
 import AllContactsContext from '../../contexts/AllContactsContext';
 
@@ -21,7 +22,14 @@ function ContactListings() {
 
     const contactsHook = useContactListings();
 
-    let { errorFetchingContact: error, fetchingContacts: fetching, contacts, mode, fetchContacts } = contactsHook;
+    let {
+        errorFetchingContact: error,
+        fetchingContacts: fetching,
+        contacts,
+        mode,
+        fetchContacts,
+        loadMoreOnscroll
+    } = contactsHook;
 
     const targetContacts = contacts[mode];
 
@@ -30,7 +38,7 @@ function ContactListings() {
         const scollHeight = target.scrollHeight;
         const height = target.clientHeight;
         const _scrollTop = target.scrollTop;
-        if (Math.abs(scollHeight - (height + _scrollTop)) < 2) {
+        if (Math.abs(scollHeight - (height + _scrollTop)) < 2 && loadMoreOnscroll) {
             fetchContacts();
         }
     }
@@ -44,7 +52,7 @@ function ContactListings() {
                             <Typography variant='h5'>Contact List</Typography>
                             <FilterButton />
                         </Box>
-                        <CheckedIndicator />
+                        <AllSelectedContactsDeleteButton />
                     </Styled.FixedHeader>
                     <Divider />
                     <Styled.ScrollableBox height="calc(100% - 70px)" overflow="auto" onScroll={handleScroll}>
@@ -62,9 +70,9 @@ function ContactListings() {
                         ) : null}
 
                         <AddMore />
-                        {fetching && <LoadingContacts />}
-                        {!fetching && <LoadMore onClick={fetchContacts} />}
-                        {error && <Typography color="error" pl={4} pr={4} pb={1} textAlign="center">{error}</Typography>}
+                        <LoadingContacts loading={fetching} />
+                        <LoadMore onClick={fetchContacts} show={!fetching} />
+                        <ErrorMessage error={error} />
                     </Styled.ScrollableBox>
                 </AllContactsContext.Provider>
             </Styled.MainBox>

@@ -9,8 +9,9 @@ const generateArrays = length => {
     return [...new Array(length)].map((...args) => args[1]);
 }
 
-function LoadingContacts({ total = 10 }) {
+function LoadingContacts({ total = 10, loading }) {
     const { height, md } = useDimensionContext();
+    if (!loading) return null;
     return (
         <Styled.MainContainer height={height}>
             {generateArrays(total).map(i => (

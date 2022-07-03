@@ -16,6 +16,7 @@ function useContactListings() {
 	const [mode, setMode] = useState(modes.random);
 	const [page, setPage] = useState({ real: 0, random: 0 });
 	const [selected, setSelected] = useState([]);
+	const [loadMoreOnscroll, setLoadMoreOnscroll] = useState(true);
 
 	const doSetContacts = (newContacts) => {
 		setContacts({
@@ -101,6 +102,8 @@ function useContactListings() {
 		modes,
 		selected,
 		isSortedBy,
+		loadMoreOnscroll,
+		setLoadMoreOnscroll,
 		setSelected,
 		setApiMode,
 		saveContact,
