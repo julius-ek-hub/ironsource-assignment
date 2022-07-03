@@ -33,7 +33,7 @@ function AllSelectedContactsDeleteButton() {
             <Checkbox
                 onChange={toggleCheckAll}
                 checked={total === contacts[apiMode].length} />
-            <Text>{selected.length} / {contacts[apiMode].length} Selected</Text>
+            <Text color="text.primary">{selected.length} / {contacts[apiMode].length} Selected</Text>
             <IconButton sx={{ ml: "auto" }} onClick={() => setConfirmBoxOpen(true)}>
                 <Delete />
             </IconButton>
