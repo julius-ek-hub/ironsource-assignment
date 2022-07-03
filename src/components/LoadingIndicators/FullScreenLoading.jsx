@@ -12,7 +12,7 @@ function FullScreenLoading({ message, transparent = false, loading = false }) {
         }}
             transitionDuration={0}>
             <CircularProgress />
-            {message && <Typography p={2}>{message}</Typography>}
+            {message && <Typography p={2} color="primary">{message}</Typography>}
         </Backdrop>
     );
 }
