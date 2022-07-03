@@ -56,7 +56,7 @@ function ContactListings() {
                         )}
 
                         {(targetContacts.length === 0 && !fetching) ? (
-                            <FlexCenter height="100%">
+                            <FlexCenter height="100%" p={4} textAlign="center">
                                 No Contact! Click on the Plus {`(+)`} icon below to Add New.
                             </FlexCenter>
                         ) : null}
