@@ -4,12 +4,19 @@ import services from "../api/services";
 import localStore from "../api/localStore";
 
 import ThemeControlContext from "../contexts/ThemeControlContext";
+import useTheme from "@mui/material/styles/useTheme";
 
-import { sortContactsBy, noInternetError, uniqueContacts } from "../utils";
+import {
+	sortContactsBy,
+	noInternetError,
+	uniqueContacts,
+	setAddressBarColor,
+} from "../utils";
 
 function useContactListings() {
 	const [contacts, setContacts] = useState({ real: [], random: [] });
 	const { setMode } = useContext(ThemeControlContext);
+	const { palette } = useTheme();
 
 	const [fetchingContacts, setFetchingContact] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -107,6 +114,7 @@ function useContactListings() {
 		setLoading(false);
 		setApiMode(localStore.getApiMode());
 		setDarkMode(localStore.getDarkMode());
+		setAddressBarColor(palette.background.paper);
 		setLoadMoreOnscroll(localStore.getLoadOnScroll());
 		setSelected([]);
 		setPage({
@@ -118,7 +126,7 @@ function useContactListings() {
 		fetchContacts();
 
 		// eslint-disable-next-line
-	}, [loading, apiMode, isSortedBy]);
+	}, [loading, apiMode, isSortedBy, palette.mode]);
 
 	return {
 		contacts,
