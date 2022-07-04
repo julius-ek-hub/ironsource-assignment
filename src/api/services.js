@@ -3,7 +3,7 @@ import localStore from "./localStore";
 
 import {
 	sleep,
-	transformContactToMatchApiRespons,
+	transformContactToMatchApiResponse,
 	transformContactToHaveDateAsObject,
 } from "../utils";
 
@@ -60,7 +60,7 @@ const saveContact = async (body) => {
 	};
 
 	if (isRandomApiMode()) {
-		return await sleepThenReturn(transformContactToMatchApiRespons(details));
+		return await sleepThenReturn(transformContactToMatchApiResponse(details));
 	}
 
 	return await crud.post(REAL_USERS_BASE_URL, details);

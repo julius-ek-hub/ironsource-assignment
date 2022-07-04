@@ -72,11 +72,11 @@ export const YY_MM_DD = (date) => {
 	}
 };
 
-export const transformContactToMatchApiRespons = function (details) {
+export const transformContactToMatchApiResponse = function (details) {
 	const dob = details.dob.date;
 	return {
 		...details,
-		_id: String(Math.random(1000) + Date.now()),
+		_id: details._id || String(Math.random(1000) + Date.now()),
 		dob: {
 			date: dob,
 			age: new Date().getFullYear() - new Date(dob).getFullYear(),
@@ -84,7 +84,9 @@ export const transformContactToMatchApiRespons = function (details) {
 	};
 };
 
-export const transformContactToHaveDateAsObject = (contact) => ({
-	...contact,
-	dob: { date: contact.dob },
-});
+export const transformContactToHaveDateAsObject = (contact) => {
+	return transformContactToMatchApiResponse({
+		...contact,
+		dob: { date: contact.dob },
+	});
+};
