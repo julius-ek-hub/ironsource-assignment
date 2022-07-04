@@ -22,7 +22,7 @@ function FormField({ InputComponent = TextField, name, label, ...rest }) {
             <InputComponent
                 onChange={({ target: { value } }) => setFieldValue(name, value)}
                 onBlur={() => setFieldTouched(name)}
-                value={values[name]}
+                value={pick(values, name)}
                 error={properError}
                 helperText={name === 'dob' ? label : (properError && error)}
                 fullWidth

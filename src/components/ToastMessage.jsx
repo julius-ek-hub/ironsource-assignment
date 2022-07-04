@@ -4,7 +4,7 @@ import Slide from '@mui/material/Slide';
 
 function ToastMessage({ status, message }) {
 
-    if (!['success', 'error'].includes(status)) return;
+    if (!['success', 'error'].includes(status)) return null;
 
     return (
         <Snackbar

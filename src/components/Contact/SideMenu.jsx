@@ -9,13 +9,17 @@ import PersonIcon from '@mui/icons-material/Person';
 import CallIcon from '@mui/icons-material/Call';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import EditIcon from '@mui/icons-material/Edit';
 
 import ContactDetails from '../ContactDetails';
 import DropDownMenu from '../DropDownMenu';
 import ConfirmThenDelete from '../ConfirmThenDelete';
+import FormLauncher from '../AddOrEditContactForm/FormLauncher';
 
 import useContactDetailsContext from '../../hooks/useContactDetailsContext';
 import useContactListingsContext from '../../hooks/useContactsListingsContext';
+
+import { capitalizeFirstLetter, YY_MM_DD } from '../../utils';
 
 const MenuItem = ({ title, Icon, ...rest }) => (
     <MuiMenuItem {...rest}>
@@ -28,9 +32,13 @@ const MenuItem = ({ title, Icon, ...rest }) => (
 
 export default function SideMenu() {
     const [detailsOpen, setDetailsOpen] = useState(false);
-    const [confirmBoxOpen, setConfirmBoxOpen] = useState(false);
-    const { phone, _id, name } = useContactDetailsContext();
-    const { deleteContact, selected, setSelected } = useContactListingsContext();
+    const [editOpen, setEditOpen] = useState(false);
+    const [confirmingDelete, setConfirmingDelete] = useState(false);
+    const thisUser = useContactDetailsContext();
+
+    const { deleteContact, selected, setSelected, updateContact } = useContactListingsContext();
+
+    const { phone, _id, name, dob } = thisUser;
 
     return (
         <>
@@ -45,27 +53,42 @@ export default function SideMenu() {
                     () => setSelected([...selected, _id])
                 } />
 
+                <MenuItem Icon={EditIcon} title="Edit" onClick={
+                    () => setEditOpen(true)
+                } />
+
+                <MenuItem Icon={CallIcon} title="Call" onClick={
+                    () => window.location.assign(`tel:${phone}`)
+                } />
+
                 <MenuItem Icon={PersonIcon} title="More Info" onClick={
                     () => setDetailsOpen(true)
                 } />
 
-                <MenuItem Icon={CallIcon} title="Call this User" onClick={
-                    () => window.location.assign(`tel:${phone}`)
-                } />
-
                 <MenuItem Icon={DeleteIcon} title="Delete Contact" onClick={
-                    () => setConfirmBoxOpen(true)
+                    () => setConfirmingDelete(true)
                 } />
             </DropDownMenu>
             <ConfirmThenDelete
-                open={confirmBoxOpen}
-                onDone={() => setConfirmBoxOpen(false)}
+                open={confirmingDelete}
+                onDone={() => setConfirmingDelete(false)}
                 deleteHandler={() => deleteContact(_id)}
                 name={name.first}
             />
             <ContactDetails
                 open={detailsOpen}
                 onClose={() => setDetailsOpen(false)} />
+
+            <FormLauncher
+                open={editOpen}
+                defaultValues={{
+                    ...thisUser,
+                    dob: YY_MM_DD(dob.date),
+                    gender: capitalizeFirstLetter(thisUser.gender)
+                }}
+                onSubmit={updateContact}
+                onCanceled={() => setEditOpen(false)}
+            />
         </>
     );
 }

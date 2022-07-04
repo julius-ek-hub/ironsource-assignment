@@ -8,7 +8,7 @@ function SubmitButton({ status }) {
     const { submitForm, resetForm } = useFormikContext();
 
     useEffect(() => {
-        status === 'success' && resetForm();
+        if (['success', undefined].includes(status)) resetForm();
 
         // eslint-disable-next-line
     }, [status])

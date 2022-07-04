@@ -17,7 +17,7 @@ const Title = () => (
     <FormField
         name="name.title"
         label="Tile"
-        options={['Mr', 'Mrs', 'Miss']}
+        options={["Mr", "Ms", "Mrs", "Monsieur", "Miss", "Madame", "Mademoiselle"]}
         InputComponent={Autocomplete} />
 )
 

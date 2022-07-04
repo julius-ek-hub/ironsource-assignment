@@ -5,6 +5,7 @@ const FlexCenter = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center',
     color: theme.palette.text.primary
 }));
 

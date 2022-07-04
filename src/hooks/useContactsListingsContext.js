@@ -18,6 +18,7 @@ import AllContactsContext from "../contexts/AllContactsContext";
  * darkMode: Boolean,
  * setDarkMode: Function,
  * setLoadMoreOnscroll: Boolean,
+ * updateContact: Function,
  * setApiMode: Function,
  * fetchContacts: Function,
  * deleteContact: Function,

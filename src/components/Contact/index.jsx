@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 
@@ -47,4 +45,4 @@ const Contact = ({ details }) => {
     );
 }
 
-export default memo(Contact);
+export default Contact;

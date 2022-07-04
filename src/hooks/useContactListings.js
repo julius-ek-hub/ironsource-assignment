@@ -84,10 +84,18 @@ function useContactListings() {
 	};
 
 	const saveContact = async (details) => {
-		if (apiMode === modes.random) return;
 		const result = await services.saveContact(details);
 		localStore.saveContact(result);
 		doSetContacts([...contacts.real, result]);
+	};
+
+	const updateContact = async (details) => {
+		const result = await services.updateContact(details);
+		localStore.updateContact(result);
+		doSetContacts([
+			...contacts[apiMode].filter(({ _id }) => _id !== details._id),
+			result,
+		]);
 	};
 
 	useEffect(() => {
@@ -116,6 +124,7 @@ function useContactListings() {
 		isSortedBy,
 		loadMoreOnscroll,
 		darkMode,
+		updateContact,
 		setDarkMode,
 		setLoadMoreOnscroll,
 		setSelected,

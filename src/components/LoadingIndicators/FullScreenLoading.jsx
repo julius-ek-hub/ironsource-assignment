@@ -5,8 +5,10 @@ import { alpha } from "@mui/material/styles";
 
 function FullScreenLoading({ message, transparent = false, loading = false }) {
 
+    if (!loading) return null;
+
     return (
-        <Backdrop open={loading} sx={{
+        <Backdrop open sx={{
             zIndex: 10000,
             bgcolor: theme => alpha(theme.palette.background.paper, transparent ? 0.8 : 1)
         }}

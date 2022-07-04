@@ -43,7 +43,7 @@ function ConfirmThenDelete({ deleteHandler, name, onDone, open }) {
                     <Button onClick={doDelete} color="error">Delete</Button>
                 </DialogActions>
             </Dialog>
-            <FullScreenLoading loading={deletStatus === "deleting"} transparent />
+            <FullScreenLoading loading={deletStatus === "deleting"} transparent message="Deleting..." />
             <ToastMessage
                 status={deletStatus}
                 message={deletStatus === 'success' ? 'Contact deleted' : 'Error deleting contact, Please try again'}

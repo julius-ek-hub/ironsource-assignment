@@ -6,6 +6,8 @@ export default function Autocomplete({ onChange, options, ...rest }) {
         <MuiAutocomplete
             onChange={(e, value) => onChange({ target: { value } })}
             options={options}
+            value={rest.value}
+            isOptionEqualToValue={(option, value) => value === option}
             renderInput={(params) => <TextField {...params} {...rest} />}
         />
     );

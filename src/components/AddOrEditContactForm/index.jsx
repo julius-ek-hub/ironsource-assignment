@@ -8,16 +8,15 @@ import AllFields from "./AllFields";
 import Form from "./Form";
 import SubmitButton from "./SubmitButton";
 
-import contactSchema from "./schema";
-
 import useDimensionContext from "../../hooks/useDimensionContext";
 
 
-function FormDialog({ open, onCanceled, onSubmit, status }) {
+function AddOrEditContactForm({ open, onCanceled, onSubmit, status, defaultValues }) {
     const { sm } = useDimensionContext();
+    if (!open) return null;
     return (
-        <Form initialValues={contactSchema.getDefaultFromShape()} onSubmit={onSubmit}>
-            <Dialog open={open} fullScreen={!sm} onClose={onCanceled} fullWidth>
+        <Form initialValues={defaultValues} onSubmit={onSubmit}>
+            <Dialog open fullScreen={!sm} onClose={onCanceled} fullWidth>
                 <DialogTitle variant="h5">Add Contact</DialogTitle>
                 <DialogContent>
                     <AllFields />
@@ -31,4 +30,4 @@ function FormDialog({ open, onCanceled, onSubmit, status }) {
     );
 }
 
-export default FormDialog;
+export default AddOrEditContactForm;

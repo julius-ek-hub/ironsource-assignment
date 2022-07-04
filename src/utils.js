@@ -53,3 +53,29 @@ export const uniqueContacts = (...all) => {
 
 	return result;
 };
+
+export const capitalizeFirstLetter = (str) =>
+	str[0].toUpperCase() + str.split("").slice(1).join("");
+
+export const YY_MM_DD = (date) => {
+	const pre_0 = (str) => "0".repeat(2 - str.length) || "";
+	const [m, d, y] = new Date(date).toLocaleDateString().split("/");
+	return `${y}-${pre_0(m) + m}-${pre_0(d) + d}`;
+};
+
+export const transformContactToMatchApiRespons = function (details) {
+	const dob = details.dob.date;
+	return {
+		...details,
+		_id: String(Math.random(1000) + Date.now()),
+		dob: {
+			date: dob,
+			age: new Date().getFullYear() - new Date(dob).getFullYear(),
+		},
+	};
+};
+
+export const transformContactToHaveDateAsObject = (contact) => ({
+	...contact,
+	dob: { date: contact.dob },
+});

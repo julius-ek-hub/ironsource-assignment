@@ -48,7 +48,7 @@ function ContactListings() {
 
     return (
         <View onScrolledToBottom={fetchContacts}>
-            <Styled.MainBox height={"100%"} position="relative" overflow="hidden">
+            <Styled.MainBox>
                 <AllContactsContext.Provider value={contactsHook}>
                     <Styled.FixedHeader>
                         <Box>
@@ -58,7 +58,7 @@ function ContactListings() {
                         <AllSelectedContactsDeleteButton />
                     </Styled.FixedHeader>
                     <Divider />
-                    <Styled.ScrollableBox height="calc(100% - 70px)" overflow="auto" onScroll={handleScroll}>
+                    <Styled.ScrollableBox onScroll={handleScroll}>
 
                         {targetContacts.length > 0 && (
                             <List>
@@ -67,7 +67,7 @@ function ContactListings() {
                         )}
 
                         {(targetContacts.length === 0 && !fetching) ? (
-                            <FlexCenter height="100%" p={4} textAlign="center">
+                            <FlexCenter height="100%" p={4}>
                                 No Contact! Click on the Plus {`(+)`} icon below to Add New.
                             </FlexCenter>
                         ) : null}

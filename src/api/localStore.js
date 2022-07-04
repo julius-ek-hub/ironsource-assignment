@@ -39,10 +39,17 @@ export const deleteContact = (_id) => {
 	return setItem(getApiMode(), JSON.stringify(allNow));
 };
 
+export const updateContact = (newContac) => {
+	const all = getContacts();
+	const allNow = all.filter((contact) => contact._id !== newContac._id);
+	return setItem(getApiMode(), JSON.stringify([...allNow, newContac]));
+};
+
 const localStore = {
 	saveContact,
 	getContacts,
 	deleteContact,
+	updateContact,
 	setApiMode,
 	getApiMode,
 	getPage: (apiMode) => Number(getItem(apiMode + "_page") || 0),

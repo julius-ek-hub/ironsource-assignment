@@ -10,7 +10,7 @@ export default function DropDownMenu({ InvokeComponent, children }) {
             <InvokeComponent onClick={rest.handleClick} />
             <Menu
                 anchorEl={rest.anchorEl}
-                open={(rest.anchorEl && rest.open) !== null}
+                open={rest.open}
                 onClose={handleClose}
                 onClick={handleClose}
             >
