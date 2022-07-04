@@ -28,6 +28,7 @@ function AddMore() {
             </Styled.Addmore>
             <FormLauncher
                 open={open}
+                title="Add new Contact"
                 defaultValues={contactSchema.getDefaultFromShape()}
                 onSubmit={saveContact}
                 onCanceled={() => setOpen(false)}

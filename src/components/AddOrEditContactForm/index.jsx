@@ -11,13 +11,13 @@ import SubmitButton from "./SubmitButton";
 import useDimensionContext from "../../hooks/useDimensionContext";
 
 
-function AddOrEditContactForm({ open, onCanceled, onSubmit, status, defaultValues }) {
+function AddOrEditContactForm({ open, onCanceled, onSubmit, status, defaultValues, title }) {
     const { sm } = useDimensionContext();
     if (!open) return null;
     return (
         <Form initialValues={defaultValues} onSubmit={onSubmit}>
             <Dialog open fullScreen={!sm} onClose={onCanceled} fullWidth>
-                <DialogTitle variant="h5">Add Contact</DialogTitle>
+                <DialogTitle variant="h5">{title}</DialogTitle>
                 <DialogContent>
                     <AllFields />
                 </DialogContent>

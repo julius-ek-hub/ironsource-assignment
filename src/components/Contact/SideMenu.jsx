@@ -81,6 +81,7 @@ export default function SideMenu() {
 
             <FormLauncher
                 open={editOpen}
+                title="Edit Contact"
                 defaultValues={{
                     ...thisUser,
                     dob: YY_MM_DD(dob.date),

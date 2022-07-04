@@ -6,7 +6,7 @@ import ToastMessage from '../ToastMessage';
 
 import { noInternetError, sleep } from '../../utils';
 
-function FormLauncher({ defaultValues, onSubmit, open, onCanceled }) {
+function FormLauncher({ defaultValues, onSubmit, open, onCanceled, title }) {
 
     const [status, setStatus] = useState();
     const [defaults, setDefaults] = useState(defaultValues);
@@ -37,6 +37,7 @@ function FormLauncher({ defaultValues, onSubmit, open, onCanceled }) {
                 defaultValues={defaults}
                 open={open}
                 status={status}
+                title={title}
                 onCanceled={() => {
                     onCanceled();
                     setStatus(undefined);
