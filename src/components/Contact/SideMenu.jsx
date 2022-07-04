@@ -36,7 +36,12 @@ export default function SideMenu() {
     const [confirmingDelete, setConfirmingDelete] = useState(false);
     const thisUser = useContactDetailsContext();
 
-    const { deleteContact, selected, setSelected, updateContact } = useContactListingsContext();
+    const {
+        deleteContact,
+        selected,
+        setSelected,
+        updateContact
+    } = useContactListingsContext();
 
     const { phone, _id, name, dob } = thisUser;
 

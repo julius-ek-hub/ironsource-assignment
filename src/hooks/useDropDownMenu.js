@@ -1,10 +1,14 @@
 import { useState } from "react";
 
+import useContactListingsContext from "./useContactsListingsContext";
+
 function useDropDownMenu() {
 	const [anchorEl, setAnchorEl] = useState(null);
+	const { fetchingContacts } = useContactListingsContext();
+
 	const open = Boolean(anchorEl);
 	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
+		if (!fetchingContacts) setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
