@@ -82,7 +82,7 @@ function useContactListings() {
 		}
 	};
 
-	const deleteContacts = async (__id) => {
+	const deleteContact = async (__id) => {
 		const toBeDeletd = Array.isArray(__id) ? __id : [__id];
 
 		await Promise.all(toBeDeletd.map((_id) => services.deleteContact(_id)));
@@ -145,7 +145,7 @@ function useContactListings() {
 		setApiMode,
 		saveContact,
 		fetchContacts,
-		deleteContact: deleteContacts,
+		deleteContact,
 		sortBy,
 	};
 }
