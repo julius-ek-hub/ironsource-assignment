@@ -21,7 +21,7 @@ function useContactListings() {
 	const [darkMode, _setDarkMode] = useState(false);
 	const [page, setPage] = useState({ real: 0, random: 0 });
 	const [selected, setSelected] = useState([]);
-	const [loadMoreOnscroll, setLoadMoreOnscroll] = useState(true);
+	const [loadMoreOnscroll, _setLoadMoreOnscroll] = useState(true);
 
 	const doSetContacts = (newContacts) => {
 		setContacts({
@@ -33,6 +33,11 @@ function useContactListings() {
 	const setApiMode = (newMode) => {
 		localStore.setApiMode(newMode);
 		_setApiMode(newMode);
+	};
+
+	const setLoadMoreOnscroll = (newMode) => {
+		localStore.setLoadOnScroll(newMode);
+		_setLoadMoreOnscroll(newMode);
 	};
 
 	const setDarkMode = (dark) => {
@@ -102,6 +107,7 @@ function useContactListings() {
 		setLoading(false);
 		setApiMode(localStore.getApiMode());
 		setDarkMode(localStore.getDarkMode());
+		setLoadMoreOnscroll(localStore.getLoadOnScroll());
 		setSelected([]);
 		setPage({
 			real: localStore.getPage(modes.real),

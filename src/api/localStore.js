@@ -56,6 +56,19 @@ const localStore = {
 	setPage: (apiMode, value) => setItem(apiMode + "_page", value),
 	setDarkMode: (value) => setItem("dark_mode", value),
 	getDarkMode: () => (getItem("dark_mode") === "true" ? true : false),
+	getLoadOnScroll: () => (getItem("load_on_scroll") === "true" ? true : false),
+	setLoadOnScroll: (value) => setItem("load_on_scroll", value),
+	reset: () => {
+		[
+			"dark_mode",
+			"real_page",
+			"random_page",
+			"api_mode",
+			"random",
+			"real",
+			"load_on_scroll",
+		].map((key) => window.localStorage.removeItem(key));
+	},
 };
 
 export default localStore;

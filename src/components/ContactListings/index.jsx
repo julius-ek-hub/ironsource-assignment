@@ -19,7 +19,6 @@ import AllContactsContext from '../../contexts/AllContactsContext';
 import useContactListings from '../../hooks/useContactListings';
 
 function ContactListings() {
-
     const contactsHook = useContactListings();
 
     let {
@@ -33,6 +32,7 @@ function ContactListings() {
     } = contactsHook;
 
     const targetContacts = contacts[apiMode];
+
 
     const handleScroll = (e) => {
         const target = e.target;
@@ -74,7 +74,7 @@ function ContactListings() {
 
                         <AddMore />
                         <LoadingContacts loading={fetching} />
-                        <LoadMore onClick={fetchContacts} show={!fetching} />
+                        <LoadMore onClick={fetchContacts} show={!fetching && selected.length === 0} />
                         <ErrorMessage error={error} />
                     </Styled.ScrollableBox>
                 </AllContactsContext.Provider>

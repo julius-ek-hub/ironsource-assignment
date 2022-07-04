@@ -10,7 +10,6 @@ import ContactBody from './ContactBody';
 import ContactDetailsContext from '../../contexts/ContactDetailsContext';
 import useContactListingsContext from '../../hooks/useContactsListingsContext';
 
-
 const Contact = ({ details }) => {
 
     const { selected, setSelected } = useContactListingsContext();
@@ -39,7 +38,9 @@ const Contact = ({ details }) => {
                         alt={name.first} />
                 </ListItemAvatar>
                 <ContactBody />
-                <ActionButtons />
+                {selected.length === 0 && (
+                    <ActionButtons />
+                )}
             </ListItem>
         </ContactDetailsContext.Provider>
     );

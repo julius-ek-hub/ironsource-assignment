@@ -58,9 +58,18 @@ export const capitalizeFirstLetter = (str) =>
 	str[0].toUpperCase() + str.split("").slice(1).join("");
 
 export const YY_MM_DD = (date) => {
-	const pre_0 = (str) => "0".repeat(2 - str.length) || "";
-	const [m, d, y] = new Date(date).toLocaleDateString().split("/");
-	return `${y}-${pre_0(m) + m}-${pre_0(d) + d}`;
+	const pre_0 = (str) => "0".repeat(2 - str.length || 0) || "";
+
+	const arrange = (_date) => {
+		const [m, d, y] = new Date(_date).toLocaleDateString().split("/");
+		return `${y}-${pre_0(m) + m}-${pre_0(d) + d}`;
+	};
+	// Sometimes the date is empty from random API so we try
+	try {
+		return arrange(date);
+	} catch (e) {
+		return arrange(new Date());
+	}
 };
 
 export const transformContactToMatchApiRespons = function (details) {

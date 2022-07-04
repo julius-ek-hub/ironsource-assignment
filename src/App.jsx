@@ -3,6 +3,7 @@ import ThemeProvider from "@mui/system/ThemeProvider/";
 
 import FullScreenLoading from "./components/LoadingIndicators/FullScreenLoading";
 import ContactListings from './components/ContactListings';
+import SomethingWentWrong from "./components/Error_500";
 
 import themeInMode from "./config/theme";
 
@@ -19,8 +20,10 @@ function TheAssignment() {
 		<ThemeControlContext.Provider value={{ setMode }}>
 			<ThemeProvider theme={themeInMode(mode)}>
 				<DimensionContext.Provider value={dimensions}>
-					<ContactListings />
-					<FullScreenLoading loading={dimensions.height === undefined} />
+					<SomethingWentWrong>
+						<ContactListings />
+						<FullScreenLoading loading={dimensions.height === undefined} />
+					</SomethingWentWrong>
 				</DimensionContext.Provider>
 			</ThemeProvider>
 		</ThemeControlContext.Provider>
